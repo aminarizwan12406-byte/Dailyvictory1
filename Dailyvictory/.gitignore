@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Dailyvictory.slnx/v18/.suo
+*.json
+/.vs/Dailyvictory.slnx/v18/DocumentLayout.json
+/.vs/slnx.sqlite
+/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
