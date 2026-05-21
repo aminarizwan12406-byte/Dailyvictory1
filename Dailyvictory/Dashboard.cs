@@ -7,6 +7,7 @@ namespace Dailyvictory
 {
     public partial class Dashboard : Form
     {
+        // DATABASEHELPER FOR CONNECTION
         DatabaseHelper db = new DatabaseHelper();
 
         public Dashboard()
@@ -35,13 +36,13 @@ namespace Dailyvictory
             dgvHabits.Columns.Add("Category", "Category");
             dgvHabits.Columns.Add("Streak", "Streak");
             dgvHabits.Columns.Add("Date", "Last Completed");
-
+            // GET THE CONNECTION OF DB WITH OBJECT
             var con = db.GetConnection();
-
+            // ACTIVATE DB
             con.Open();
-
+            // FETCH DATA FROM DB
             string query = "SELECT * FROM Habits";
-
+           
             SQLiteCommand cmd =
                 new SQLiteCommand(query, con);
 
@@ -64,9 +65,10 @@ namespace Dailyvictory
         // ADD HABIT
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            // CREATE FORM OBJECT
             AddHabitForm a =
      new AddHabitForm();
-
+            // SHOW FORM
             a.ShowDialog();
             LoadHabits();
         }
@@ -74,12 +76,13 @@ namespace Dailyvictory
         // DELETE HABIT
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            // CHECK SELECTION
             if (dgvHabits.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Select Habit");
                 return;
             }
-
+            // GET SELECTED HABIT
             string habit =
                 dgvHabits.SelectedRows[0]
                 .Cells[0].Value.ToString();
@@ -122,7 +125,7 @@ namespace Dailyvictory
             var con = db.GetConnection();
 
             con.Open();
-
+            // UPDATE QUERY
             string query =
                 "UPDATE Habits SET " +
                 "Streak = Streak + 1, " +

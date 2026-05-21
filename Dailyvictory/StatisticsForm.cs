@@ -17,7 +17,7 @@ namespace Dailyvictory
         public StatisticsForm()
         {
             InitializeComponent();
-
+            // DATE LABEL
             lblDate.Text =
                 DateTime.Now.ToLongDateString();
 

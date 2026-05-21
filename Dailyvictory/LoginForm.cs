@@ -12,6 +12,7 @@ namespace Dailyvictory
 {
     public partial class LoginForm : Form
     {
+        //FORMS CONTROLS INITIALIZE
         public LoginForm()
         {
             InitializeComponent();
@@ -23,9 +24,10 @@ namespace Dailyvictory
         }
             private void btnLogin_Click(object sender, EventArgs e)
         {
-            //  login check
+            //  LOGIN CHECK
             if (txtUsername.Text == "admin" && txtPassword.Text == "1234")
-            {
+            { 
+                // SUCCESSFUL LOGIN
                 Dashboard d = new Dashboard();
                 d.Show();
                 this.Hide();
@@ -35,6 +37,7 @@ namespace Dailyvictory
                 MessageBox.Show("Invalid Username or Password");
             }
         }
+        // TO EXIT THE APPLICATION
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
