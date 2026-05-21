@@ -22,23 +22,25 @@ namespace Dailyvictory
 
         private void Form1_Load(object sender, EventArgs e)
         {
-                LoadHabits();
+            LoadHabits();
         }
 
         // LOAD HABITS
         private void LoadHabits()
         {
-            lstHabits.Items.Clear();
+            dgvHabits.Rows.Clear();
+            dgvHabits.Columns.Clear();
 
-            DatabaseHelper db =
-                new DatabaseHelper();
+            dgvHabits.Columns.Add("HabitName", "Habit Name");
+            dgvHabits.Columns.Add("Category", "Category");
+            dgvHabits.Columns.Add("Streak", "Streak");
+            dgvHabits.Columns.Add("Date", "Last Completed");
 
             var con = db.GetConnection();
 
             con.Open();
 
-            string query =
-                "SELECT * FROM Habits";
+            string query = "SELECT * FROM Habits";
 
             SQLiteCommand cmd =
                 new SQLiteCommand(query, con);
@@ -48,10 +50,11 @@ namespace Dailyvictory
 
             while (reader.Read())
             {
-                lstHabits.Items.Add(
-                    reader["HabitName"].ToString()
-                    + " - " +
-                    reader["Category"].ToString()
+                dgvHabits.Rows.Add(
+                    reader["HabitName"].ToString(),
+                    reader["Category"].ToString(),
+                    reader["Streak"].ToString(),
+                    reader["LastCompletedDate"].ToString()
                 );
             }
 
@@ -71,19 +74,17 @@ namespace Dailyvictory
         // DELETE HABIT
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (lstHabits.SelectedItem == null)
+            if (dgvHabits.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Select Habit");
                 return;
             }
 
             string habit =
-lstHabits.SelectedItem.ToString().Split('-')[0].Trim();
+                dgvHabits.SelectedRows[0]
+                .Cells[0].Value.ToString();
 
-            MessageBox.Show(habit);
-
-            SQLiteConnection con =
-                db.GetConnection();
+            var con = db.GetConnection();
 
             con.Open();
 
@@ -93,16 +94,13 @@ lstHabits.SelectedItem.ToString().Split('-')[0].Trim();
             SQLiteCommand cmd =
                 new SQLiteCommand(query, con);
 
-            cmd.Parameters.AddWithValue(
-                "@name", habit);
+            cmd.Parameters.AddWithValue("@name", habit);
 
-            int rows =
-                cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();
 
             con.Close();
 
-            MessageBox.Show(
-                rows + " Deleted");
+            MessageBox.Show("Habit Deleted");
 
             LoadHabits();
         }
@@ -111,32 +109,40 @@ lstHabits.SelectedItem.ToString().Split('-')[0].Trim();
 
         private void btnComplete_Click(object sender, EventArgs e)
         {
-            if (lstHabits.SelectedItem == null)
+            if (dgvHabits.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Select Habit");
                 return;
             }
 
-            string habit = lstHabits.SelectedItem.ToString().Split('-')[0].Trim();
+            string habit =
+                dgvHabits.SelectedRows[0]
+                .Cells[0].Value.ToString();
 
-            using (var con = db.GetConnection())
-            using (var cmd = con.CreateCommand())
-            {
-                con.Open();
-                cmd.CommandText = @"UPDATE Habits
-                            SET Streak = Streak + 1, LastCompletedDate=@d
-                            WHERE LOWER(TRIM(HabitName)) = LOWER(TRIM(@h))";
+            var con = db.GetConnection();
 
-                cmd.Parameters.AddWithValue("@d", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                cmd.Parameters.AddWithValue("@h", habit);
+            con.Open();
 
-                int rows = cmd.ExecuteNonQuery();
+            string query =
+                "UPDATE Habits SET " +
+                "Streak = Streak + 1, " +
+                "LastCompletedDate=@d " +
+                "WHERE HabitName=@h";
 
-                if (rows > 0)
-                    MessageBox.Show("Habit Completed! Rows affected: " + rows);
-                else
-                    MessageBox.Show("ERROR: No rows updated! Check habit name: '" + habit + "'");
-            }
+            SQLiteCommand cmd =
+                new SQLiteCommand(query, con);
+
+            cmd.Parameters.AddWithValue(
+                "@d",
+                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+
+            cmd.Parameters.AddWithValue("@h", habit);
+
+            cmd.ExecuteNonQuery();
+
+            con.Close();
+
+            MessageBox.Show("Habit Completed");
 
             LoadHabits();
         }
@@ -160,6 +166,6 @@ lstHabits.SelectedItem.ToString().Split('-')[0].Trim();
             this.Hide();
         }
 
-        
+
     }
 }

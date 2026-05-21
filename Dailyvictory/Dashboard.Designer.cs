@@ -32,10 +32,11 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnComplete = new System.Windows.Forms.Button();
-            this.lstHabits = new System.Windows.Forms.ListBox();
             this.lblDate = new System.Windows.Forms.Label();
             this.btnStatistics = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
+            this.dgvHabits = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHabits)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -87,17 +88,6 @@
             this.btnComplete.UseVisualStyleBackColor = false;
             this.btnComplete.Click += new System.EventHandler(this.btnComplete_Click);
             // 
-            // lstHabits
-            // 
-            this.lstHabits.BackColor = System.Drawing.Color.SkyBlue;
-            this.lstHabits.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstHabits.FormattingEnabled = true;
-            this.lstHabits.ItemHeight = 22;
-            this.lstHabits.Location = new System.Drawing.Point(35, 91);
-            this.lstHabits.Name = "lstHabits";
-            this.lstHabits.Size = new System.Drawing.Size(791, 400);
-            this.lstHabits.TabIndex = 8;
-            // 
             // lblDate
             // 
             this.lblDate.AutoSize = true;
@@ -135,16 +125,30 @@
             this.btnLogout.UseVisualStyleBackColor = false;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
+            // dgvHabits
+            // 
+            this.dgvHabits.AllowUserToAddRows = false;
+            this.dgvHabits.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvHabits.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHabits.Location = new System.Drawing.Point(66, 100);
+            this.dgvHabits.Name = "dgvHabits";
+            this.dgvHabits.ReadOnly = true;
+            this.dgvHabits.RowHeadersWidth = 62;
+            this.dgvHabits.RowTemplate.Height = 28;
+            this.dgvHabits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvHabits.Size = new System.Drawing.Size(823, 389);
+            this.dgvHabits.TabIndex = 12;
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightCyan;
             this.ClientSize = new System.Drawing.Size(1224, 749);
+            this.Controls.Add(this.dgvHabits);
             this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.btnStatistics);
             this.Controls.Add(this.lblDate);
-            this.Controls.Add(this.lstHabits);
             this.Controls.Add(this.btnComplete);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAdd);
@@ -153,6 +157,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dailyvictory";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHabits)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -164,10 +169,10 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnComplete;
-        private System.Windows.Forms.ListBox lstHabits;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.Button btnStatistics;
         private System.Windows.Forms.Button btnLogout;
+        private System.Windows.Forms.DataGridView dgvHabits;
     }
 }
 
